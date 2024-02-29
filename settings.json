@@ -1,0 +1,8 @@
+{
+  "dataFolder": "Training data",
+  "trainFolder": "Training data\\cannyImages\\Train",
+  "testFolder": "Training data\\cannyImages\\Test",
+  "modelsFolder": "models",
+  "logsFolder": "logs",
+  "specialTests": "testBC"
+}
