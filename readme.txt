@@ -20,4 +20,4 @@ Setup Guide:
   for testing on a single file use run-evaluation.py - specify model path and picture path there and it will evaluate given image with help of given model
   for bulk testing use evaluate-bulk.py - it will take images from given folder (user must specify concrete folder with pictures, without subdirs), evaluate them and return plot with results and number of lodged/not lodged pictures. Model can also be specified
 5) Testing on different files than given
-  For testing on custom files run preprocess-custom.py over the file and then specify path to it in run-evaluation.py and run the script. It will return result for chosen picture
+  For testing on custom files - preprocess the image and use run-evaluation.py
