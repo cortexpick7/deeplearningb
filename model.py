@@ -52,10 +52,8 @@ val_size = int(len(data) * .3)
 train = data.take(train_size)
 val = data.skip(train_size).take(val_size)
 
-# We create and setup our model
 model = Sequential()
 
-# Layers
 model.add(Conv2D(16, (3,3), 1, activation='relu', input_shape=(540, 960, 3)))
 model.add(MaxPooling2D())
 
@@ -68,8 +66,6 @@ model.add(Flatten())
 
 model.add(Dense(1, activation='sigmoid'))
 
-# Adam is an adaptive learning rate algorithm designed to improve training speeds in
-# deep neural networks and reach convergence quickly.
 model.compile('adam', loss=tf.losses.BinaryCrossentropy(), metrics=['accuracy'])
 model.summary()
 

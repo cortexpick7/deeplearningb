@@ -13,28 +13,42 @@ settingsJsonString = open(pathToSettings)
 pathToDataFolder = json.load(settingsJsonString)["testFolder"]
 
 model = load_model('./models/mmm.h5')
-picturesFolderDir = os.path.join(pathToDataFolder, "Good")
-
-results = []
-
+picturesFolderDirGood = os.path.join(pathToDataFolder, "Good")
+picturesFolderDirLodged = os.path.join(pathToDataFolder, "Lodged")
+resultsGood = []
+resultsLodged = []
+lower = []
+upper = []
 lodged = 0
 good = 0
 count = 0
 
-for fileName in os.listdir(picturesFolderDir):
-  img = cv2.imread(os.path.join(picturesFolderDir, fileName))
+
+
+for fileName in os.listdir(picturesFolderDirGood):
+  img = cv2.imread(os.path.join(picturesFolderDirGood, fileName))
   resize = tf.image.resize(img, (540, 960))
   evalResult = model.predict(np.expand_dims(resize/255, 0))
-  results.append(float(evalResult))
+  if evalResult < 0.6:
+   resultsGood.append(float(evalResult))
   count+=1
-  if evalResult > 0.5:
-    lodged+=1
-  else:
-    good+=1
-resultOrder = [i for i in range(1, count+1)]
 
-plt.plot(resultOrder, results)  # Plot numbers
+
+
+for fileName in os.listdir(picturesFolderDirLodged):
+  img = cv2.imread(os.path.join(picturesFolderDirLodged, fileName))
+  resize = tf.image.resize(img, (540, 960))
+  evalResult = model.predict(np.expand_dims(resize/255, 0))
+  if evalResult > 0.4:
+    resultsLodged.append(float(evalResult))
+  count+=1
+
+for i in range (count):
+  lower.append(0.43)
+  upper.append(0.59)
+
+plt.plot(resultsGood, 'g.', resultsLodged, "r.", upper, "b", lower, "b") 
+plt.xlim(0, 61)
+plt.title("Výsledky klasifikace obrázků ze dvou souborů dat")
+plt.legend(["Dobrá pšenice", "Polehlá pšenice", "Oblast překryvu"], loc="upper right")
 plt.show()
-
-print("Lodged: " + str(lodged)) 
-print("Good: " + str(good))
